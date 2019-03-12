@@ -86,7 +86,7 @@ class Author(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return '{0} {1}'.format(self.last_name, self.first_name)
+        return '{0}, {1}'.format(self.last_name, self.first_name)
 
 class Language(models.Model):
     """Model representing a Language (e.g. Korea, English, French, etc.)"""
