@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse # Used to generate URLs by reversing the URL patterns
 import uuid # Required for unique book instances
 
+
 class Genre(models.Model):
     """Model representing a book genre."""
     name = models.CharField(max_length=200, help_text='Enter a book genre (e.g. Science Fiction)')
@@ -39,6 +40,7 @@ class Book(models.Model):
         return reverse('book-detail', args=[str(self.id)])
 
 
+
 class BookInstance(models.Model):
     """Model representing a specific copy of a book (i.e. that can be borrowed from the library)."""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID for this particular book across whole library')
@@ -66,7 +68,7 @@ class BookInstance(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.id} ({self.book.title})'
+        return '{0} {1}'.format({self.id}, ({self.book.title}))
 
 class Author(models.Model):
     """Model representing an author."""
@@ -84,7 +86,7 @@ class Author(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.last_name}, {self.first_name}'
+        return '{0} {1}'.format(self.last_name, self.first_name)
 
 class Language(models.Model):
     """Model representing a Language (e.g. Korea, English, French, etc.)"""

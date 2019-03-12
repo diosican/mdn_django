@@ -1,5 +1,10 @@
 from django.shortcuts import render
 from catalog.models import Book, Author, BookInstance, Genre, Language
+from django.shortcuts import get_object_or_404
+from django.views import generic
+
+
+
 
 def index(request):
     """View function for home page of site."""
@@ -10,9 +15,7 @@ def index(request):
 
     # Available books (status = 'a')
     num_instances_available = BookInstance.objects.filter(status__exact='a').count()
-    num_books_exact = Book.objects.filter(title__exact='a').count()
-
-    print(Book.objects.filter(title__exact='Auto').count())
+    num_books_exact = Book.objects.filter(title__contains='Auto').count()
 
     # The 'all()' is implied by default.
     num_authors = Author.objects.all().count()
@@ -28,5 +31,13 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
+class BookListView(generic.ListView):
+    model = Book
+    paginate_by = 2
 
-# Create your views here.
+class BookDetailView(generic.DetailView):
+    model = Book
+
+def book_detail_view(request, primary_key):
+    book = get_object_or_404(Book, pk=primary_key)
+    return render(request, 'catalog/book_detail.html', context={'book': book})
