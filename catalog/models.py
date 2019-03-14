@@ -4,7 +4,6 @@ import uuid # Required for unique book instances
 from django.contrib.auth.models import User
 from datetime import date
 
-
 class Genre(models.Model):
     """Model representing a book genre."""
     name = models.CharField(max_length=200, help_text='Enter a book genre (e.g. Science Fiction)')
@@ -68,7 +67,7 @@ class BookInstance(models.Model):
 
     class Meta:
         ordering = ['due_back']
-        permissions = (("can_mark_returned", "Set book as returned"),)  
+        permissions = (("can_mark_returned", "Set book as returned"),)
 
     def __str__(self):
         """String for representing the Model object."""
